@@ -1,29 +1,36 @@
 {% extends "base_template.html" %}
 {% block body %}
 
-<div class="sidenav">
-         <div class="login-main-text">
-            <h2>Test Medical <br>Login Page</h2>
-            <p>Login or register from here to access.</p>
-         </div>
-      </div>
-      <div class="main">
-         <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-               <form method="post">
-                   {{ form.csrf_token }}
-                  <div class="form-group">
-                     <label>{{ form.username.label }}</label>
-                     {{ form.username() }}
-                  </div>
-                  <div class="form-group">
-                     <label>{{ form.password.label }}</label>
-                      {{ form.password() }}
-                  </div>
-                  <button type="submit" class="btn btn-black">Login</button>
-                  <button type="submit" class="btn btn-secondary">Register</button>
-               </form>
-            </div>
-         </div>
-      </div>
+<div class="container-fluid h-100   ">
+<div class="row   h-100">
+    <div class="col align-middle">
+    <div class="main text-center shadow-sm ">
+        <div class="mt-5 ">
+            <h5 style="font-family: 'Major Mono Display', monospace;">Welcome to</h5>
+            <h3 style="font-family: 'Cutive Mono', monospace; "><b>Test Medical System</b></h3>
+            <p>Login to get all your medical info</p>
+        </div>
+
+        <div class="login-form">
+            <form method="post">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    <label>{{ form.username.label }}</label>
+                    {{ form.username() }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.password.label }}</label>
+                    {{ form.password() }}
+                </div>
+                <button type="submit" class="btn btn-black">Login</button>
+            </form>
+        </div>
+    </div>
+        </div>
+    <div class="col-lg d-lg-block bg-dark text-center">
+    <a href="/register" class="btn btn-secondary">Register</a>
+    </div>
+
+    </div>
+</div>
 {% endblock body %}

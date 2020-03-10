@@ -1,7 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.hybrid import hybrid_method
 
-
-db = SQLAlchemy()
+from create_db import db
+from password_protection import check_encrypted_password
 
 
 class User(db.Model):
@@ -25,7 +25,7 @@ class User(db.Model):
         return False
 
     def get_id(self):
-        return self.userId
+        return self.id
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -38,6 +38,8 @@ class Patent(db.Model):
     address = db.Column(db.String(120), unique=True, nullable=False)
     phoneNumber = db.Column(db.String(120), unique=True, nullable=False)
     accountBalance = db.Column(db.String(120), unique=True, nullable=False)
+    user_id =db.Column(db.Integer, db.ForeignKey('user.id'),
+        nullable=False)
     visits = db.relationship('Visit', backref='patent', lazy=True)
 
     def __repr__(self):

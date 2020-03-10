@@ -1,0 +1,30 @@
+p{
+    font-family: 'Courier Prime', monospace;
+}
+span{
+    font-family: 'Courier Prime', monospace;
+}
+label{
+    font-family: 'Courier Prime', monospace;
+}
+.flex-grow-1 {
+  -ms-flex-positive: 1 !important;
+  flex-grow: 1 !important;
+    	display: flex;
+		flex-direction: column;
+    justify-content: center;
+}
+.fill-container{
+    min-height: 100%;
+    overflow: hidden;
+     height:100%;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+.wrapper {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
