@@ -1,0 +1,7 @@
+{% extends "base_template.html" %}
+{% block body %}
+    <div class="container-fluid h-100 text-center">
+    <h>Account Balance: {{ accountBalance }}</h>
+    <a class="btn btn-info" href="{{ url_for("logout_page") }}">Logout</a>
+    </div>
+{% endblock body %}

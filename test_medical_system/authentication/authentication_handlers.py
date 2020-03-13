@@ -1,24 +1,16 @@
+from datetime import datetime
+
 from flask import request, flash, render_template, redirect, url_for
-from password_protection import encrypt_password, check_encrypted_password
-from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 
-from models import User
-from forms import LoginForm, RegisterForm
-from create_db import create_app, db
+from test_medical_system.init_app import db
+from test_medical_system.authentication.password_protection import encrypt_password, check_encrypted_password
+from flask_login import login_user, login_required, current_user, logout_user
 
-
-app = create_app()
-
-login_manager = LoginManager()
-
-login_manager.init_app(app)
+from test_medical_system import app, login_manager
+from test_medical_system.database.models import User
+from test_medical_system.authentication.forms import LoginForm, RegisterForm
 
 
-
-@app.route('/')
-@login_required
-def hello_world():
-    return 'Hello World!'
 
 @app.route("/register", methods=['GET', 'POST'])
 def register_user():
@@ -30,16 +22,10 @@ def register_user():
         newUser = User(username=username,password=encrypt_password(password),accessPrivilege=accesLevel)
         db.session.add(newUser)
         db.session.commit()
+        return redirect(url_for("home"))
 
-    return render_template('register_page.html', form=form)
-
-@login_required
-@app.route("/logout", methods=['GET', 'POST'])
-def logout_page():
-    if request.method == "POST":
-        logout_user()
-        return redirect(url_for("login_page"))
-    return render_template("logout_page.html")
+    from datetime import datetime
+    return render_template('register_page.html',currentTime=str(datetime.now()), form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -53,24 +39,32 @@ def login_page():
         if logging_in_user is not None and check_encrypted_password(password_data, logging_in_user.password):
             login_user(logging_in_user)
             next = request.args.get('next')
+            if next is None:
+                next = url_for("home")
             flash('Logged in successfully.',"Login")
 
             return redirect(next)
         else:
             flash('User not found with username and password', "Login")
 
-    return render_template('login_page.html', form=form)
+    from datetime import datetime
+    return render_template('login_page.html', currentTime=str(datetime.now()),form=form)
+
+@app.route("/logout", methods=['GET', 'POST'])
+@login_required
+def logout_page():
+    if request.method == "POST":
+        logout_user()
+        return redirect(url_for("login_page"))
+    return render_template("logout_page.html")
+
 
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return redirect(url_for("login_page", next=request.path))
+    return redirect(url_for("login_page",currentTime=str(datetime.now()), next=request.path))
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

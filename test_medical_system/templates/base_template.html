@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Test Medical System</title>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="/static/jquery-1.11.1.min.js"></script>
+    <link href="/static/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="/static/styles.css" rel="stylesheet" id="css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="/static/bootstrap.min.js"></script>
     <script src="/static/scripts.js"></script>
 <!-- font-family: 'Major Mono Display', monospace;
 font-family: 'Cutive Mono', monospace;
@@ -64,5 +64,6 @@ font-family: 'Courier Prime', monospace;-->
 
 
 {% block body %}{% endblock %}
+<p>{{ currentTime }}</p>
 </body>
 </html>

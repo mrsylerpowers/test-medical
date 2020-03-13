@@ -1,7 +1,4 @@
-from sqlalchemy.ext.hybrid import hybrid_method
-
-from create_db import db
-from password_protection import check_encrypted_password
+from test_medical_system.init_app import db
 
 
 class User(db.Model):
@@ -10,7 +7,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     accessPrivilege = db.Column(db.Integer, nullable=False)
-    patentInfo = db.relationship('Patent', backref='user', lazy=True)
+    patentInfo = db.relationship('Patent', backref='user', lazy=True, uselist=False)
 
     @property
     def is_active(self):
@@ -37,7 +34,7 @@ class Patent(db.Model):
     name = db.Column(db.String(80), unique=True, nullable=False)
     address = db.Column(db.String(120), unique=True, nullable=False)
     phoneNumber = db.Column(db.String(120), unique=True, nullable=False)
-    accountBalance = db.Column(db.String(120), unique=True, nullable=False)
+    accountBalance = db.Column(db.Integer, unique=True, nullable=False)
     user_id =db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
     visits = db.relationship('Visit', backref='patent', lazy=True)

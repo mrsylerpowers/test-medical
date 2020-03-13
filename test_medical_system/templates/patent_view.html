@@ -1,0 +1,31 @@
+{% extends "base_template.html" %}
+{% block body %}
+    <div class="container">
+    <h1 class="d-inline-block"> Hello {% if current_user.accessPrivilege == 1 %}Nurse{% elif current_user.accessPrivilege == 2 %}Doctor{% endif %}.</h1>
+    <a class="btn btn-info ml-5 d-inline-block" href="{{ url_for("patent.createPatent") }}" >Create Patent</a>
+        <a class="btn btn-info" href="{{ url_for("logout_page") }}">Logout</a>
+
+</div>
+    <div class="divider"></div>
+     <div class="container">
+    {% for patent in patents %}
+    <div class="card d-inline-block m-1" style="width: 18rem;">
+
+  <div class="card-body">
+    <h5 class="card-title">{{ patent.name }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">Account Balance: {{ patent.accountBalance }}</h6>
+    <div class="card-text">
+        <ul class="list-group">
+  <li class="list-group-item "><span><b>Address: </b></span> {{ patent.address }}</li>
+  <li class="list-group-item"><span><b>Phone Number: </b></span> {{ patent.phoneNumber }}</li>
+
+</ul>
+    </div>
+    <a href="{{ url_for("patent.viewPaisent",paient_id=patent.id) }}" class="btn btn-primary">Edit Patent</a>
+  </div>
+</div>
+    {% endfor %}
+     </div>
+
+
+{% endblock %}
