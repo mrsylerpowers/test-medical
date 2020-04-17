@@ -16,7 +16,7 @@ from datetime import datetime
 @patent.route("/create", methods=['GET', 'POST'])
 @login_required
 def createPatent():
-    if current_user.accessPrivilege < 1:
+    if current_user.accessPrivilege != 1:
         return abort(401)
     form = RegisterFormPatent()
     if form.validate_on_submit():
@@ -46,20 +46,16 @@ def viewPaisent(paient_id):
     patent = db.session.query(Patent).filter(Patent.id == paient_id).one()
     user = patent.user
 
-    form = RegisterFormPatent()
-    form.username.data = user.username
-    form.password.data = "*********"
-    form.name.data = patent.name
-    form.accountBalance.data = patent.accountBalance
-    form.mobile_phone.data = patent.phoneNumber
-    form.address.data = patent.address
+    form = RegisterFormPatent(username=user.username, password="*********", name=patent.name, accountBalance=patent.accountBalance, mobile_phone=patent.phoneNumber, address=patent.address)
+
+
 
     if form.validate_on_submit():
         patent = db.session.query(Patent).filter(Patent.id == paient_id).one()
         user = patent.user
         user.username = form.username.data
         patent.name = form.name.data
-        patent.accountBalance =    int(form.accountBalance.data)
+        patent.accountBalance = form.accountBalance.data
         patent.phoneNumber = form.mobile_phone.data
         patent.address = form.address.data
         db.session.commit()
